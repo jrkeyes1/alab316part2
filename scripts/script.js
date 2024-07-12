@@ -59,37 +59,54 @@ const subMenuEl = document.getElementById("sub-menu")
 
 subMenuEl.style.height = "100%";
 
-
-subMenuEl.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--sub-menu-bg');
+subMenuEl.style.backgroundColor = document.getElementById('--sub-menu-bg');
 
 subMenuEl.classList.add('flex-around');
 
-const topMenuLinks = topMenuEl.querySelectorAll('a');
+//submenu 
 
-topMenuEl.addEventListener('click', function (event) {
+subMenuEl.style.position = 'absolute'
 
+subMenuEl.style.top = '0'
+
+//Adding Menu Interaction 
+
+// 1. Select and cache all of the <a> elements inside of topMenuEl in a variable named topMenuLinks
+
+const topMenuLinks = topMenuEl.getElementsByTagName('a');
+
+// 2. Attach a delegated 'click' event listener to topMenuEl
+topMenuEl.addEventListener('click', function(event) {
+    // Call the event object's preventDefault() method
     event.preventDefault();
-
+    
+    // Immediately return if the element clicked was not an <a> element
     if (event.target.tagName !== 'A') {
         return;
     }
-
+    
+    // Log the content of the <a> to verify the handler is working
     console.log(event.target.textContent);
-});
 
-if (Event.target.classList.contains('active')) {
-    Event.target.classList.remove('active');
-} else {
-    Event.target.classList.add('active');
-}
+    // Add the active class to the <a> element that was clicked, unless it was already active
+    if (event.target.classList.contains('active')) {
+        event.target.classList.remove('active');
+    } else {
+        event.target.classList.add('active');
+    }
 
-// Remove the active class from each other <a> element in topMenuLinks
-topMenuLinks.forEach(link => {
-    if (link !== Event.target) {
-        link.classList.remove('active');
+    // Remove the active class from each other <a> element in topMenuLinks
+    for (let i = 0; i < topMenuLinks.length; i++) {
+        if (topMenuLinks[i] !== event.target) {
+            topMenuLinks[i].classList.remove('active');
+        }
     }
 });
 
-// Log the content of the <a> element to verify the handler is working
-console.log(Event.target.textContent);
+////Part 5
+// 1. Clear the current contents of subMenuEl
+    subMenuEl.innerHTML = '';
+
+
+
 
